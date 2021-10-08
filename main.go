@@ -7,6 +7,7 @@ import (
 
 	db "github.com/poc_grpc/db_connect"
 	"github.com/poc_grpc/migrations"
+	"github.com/poc_grpc/observalibity"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/poc_grpc/middleware"
@@ -23,8 +24,10 @@ func main() {
 
 	dbconnection := db.InitDB()
 	migrations.InitMigrations(dbconnection)
-
 	defer dbconnection.Close()
+
+	closer := observalibity.InitJaeger("Server init tracing")
+	defer closer.Close()
 
 	addr := fmt.Sprintf(":%d", 50051)
 	addrHttp := fmt.Sprintf(":%d", 5000)
