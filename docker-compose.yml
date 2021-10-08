@@ -27,5 +27,6 @@ networks:
   local-network:
     driver: bridge
     ipam:
+      driver: default
       config:
-        - subnet: 10.20.1.0/24
+        - subnet: 10.200.0.1/16

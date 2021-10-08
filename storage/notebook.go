@@ -15,7 +15,7 @@ func SaveNotebook(mctx mcontext.Context, nb entity.Notebook) error {
 	sqlStatement := `INSERT INTO notebook VALUES ($1, $2, $3, $4, $5)`
 	err := db.QueryRow(sqlStatement, nb.ID, nb.Name, nb.Marca, nb.Modelo, nb.NumeroSerie)
 	if err != nil {
-		mlog.Error(mctx).Err(err.Err()).Msgf("Error to insert notebook into db")
+		mlog.Error(mctx).Err(err.Err()).Msgf("Error to insert notebook into db %v", err)
 	}
 	return nil
 }

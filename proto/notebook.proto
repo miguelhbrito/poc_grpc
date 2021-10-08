@@ -4,8 +4,8 @@ option go_package = "/proto";
 
 service NotebookService {
     rpc CreateNotebook(CreateNotebookRequest) returns (CreateNotebookResponse) {};
-    rpc GetNotebook(GetNotebookRequest) returns(GetNotebookResponse) {};
-    rpc ListNotebooks(ListNotebooksRequest) returns(stream ListNotebooksResponse) {};
+    rpc GetNotebook(GetNotebookRequest)       returns(GetNotebookResponse) {};
+    rpc ListNotebooks(ListNotebooksRequest)   returns(stream ListNotebooksResponse) {};
 }
 
 message Notebook {

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	db "github.com/poc_grpc/db_connect"
+	"github.com/poc_grpc/migrations"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/poc_grpc/middleware"
@@ -20,7 +21,10 @@ import (
 
 func main() {
 
-	_ = db.InitDB()
+	dbconnection := db.InitDB()
+	migrations.InitMigrations(dbconnection)
+
+	defer dbconnection.Close()
 
 	addr := fmt.Sprintf(":%d", 50051)
 	addrHttp := fmt.Sprintf(":%d", 5000)
@@ -52,7 +56,7 @@ func main() {
 
 	http.Handle("/metrics", promhttp.Handler())
 
+	go log.Fatal().Err(grpcServer.Serve(lis)).Msg("failed to start grpc")
 	log.Fatal().Err(http.ListenAndServe(addrHttp, nil)).Msg("failed to start http server")
-	log.Fatal().Err(grpcServer.Serve(lis)).Msg("failed to start grpc")
 
 }

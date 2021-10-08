@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	_ "github.com/lib/pq"
-	"github.com/poc_grpc/migrations"
 )
 
 const (
@@ -29,6 +28,5 @@ func InitDB() (db *sql.DB) {
 		panic(err)
 	}
 	fmt.Println("Successfully connected!")
-	migrations.InitMigrations(db)
-	return
+	return db
 }
