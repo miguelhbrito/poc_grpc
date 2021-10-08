@@ -6,25 +6,39 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/poc_grpc/mcontext"
-	"github.com/poc_grpc/middleware"
 	"github.com/poc_grpc/mlog"
+	"github.com/poc_grpc/models"
+	"github.com/uber/jaeger-client-go"
 )
 
-func SpanByGprc(ctx context.Context, ts Span) mcontext.Context {
-	md := middleware.ExtractIncoming(ctx).Clone()
-	parentSpanContext, err := opentracing.GlobalTracer().Extract(opentracing.HTTPHeaders, middleware.MetadataTextMap(md))
+type MySpan struct {
+	FullMethod string
+	Infos      map[string]string
+}
+
+func SpanByGprc(ctx context.Context, sp MySpan) mcontext.Context {
+	md := ExtractIncoming(ctx).Clone()
+	parentSpanContext, err := opentracing.GlobalTracer().Extract(opentracing.HTTPHeaders, MetadataTextMap(md))
 	if err != nil && err != opentracing.ErrSpanContextNotFound {
-		mlog.Info(mcontext.NewFrom(ctx)).Err(err).Msg("failed parsing trace information")
+		mlog.Info(mcontext.NewFrom(ctx)).Err(err).Msg("failed")
 	}
 	serverSpan := opentracing.GlobalTracer().StartSpan(
-		ts.OperationName,
+		sp.FullMethod,
 		ext.RPCServerOption(parentSpanContext),
 	)
-	injectOpentracingIdsToTags("tracking-server", serverSpan, Extract(ctx))
+
+	var tid string
+	if sc, ok := serverSpan.Context().(jaeger.SpanContext); ok {
+		tid = sc.TraceID().String()
+	}
 
 	openCtx := opentracing.ContextWithSpan(ctx, serverSpan)
-	finalCtx := dcontext.NewFrom(openCtx)
-	finalCtx = dcontext.WithValue(finalCtx, api.TraceIDCtxKey, t.GetTraceID(finalCtx))
-	finalCtx = dcontext.WithValue(finalCtx, api.ServiceNameCtxKey, t.serviceName)
-	return finalCtx
+	ctxResult := mcontext.NewFrom(openCtx)
+	ctxResult = mcontext.WithValue(ctxResult, models.TrackingIdCtxKey, models.TrackingId(tid))
+
+	for k, v := range sp.Infos {
+		serverSpan.SetTag(k, v)
+	}
+
+	return nil
 }

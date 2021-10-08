@@ -3,10 +3,10 @@ package storage
 import (
 	"database/sql"
 
-	"github.com/poc_grpc/api/entity"
 	dbconnect "github.com/poc_grpc/db_connect"
 	"github.com/poc_grpc/mcontext"
 	"github.com/poc_grpc/mlog"
+	"github.com/poc_grpc/models/entity"
 )
 
 func SaveNotebook(mctx mcontext.Context, nb entity.Notebook) error {

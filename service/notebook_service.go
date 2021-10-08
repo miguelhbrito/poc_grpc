@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/poc_grpc/api/entity"
 	"github.com/poc_grpc/mcontext"
 	"github.com/poc_grpc/mlog"
+	"github.com/poc_grpc/models/entity"
 	proto "github.com/poc_grpc/pb"
 	"github.com/poc_grpc/storage"
 	"google.golang.org/grpc/codes"

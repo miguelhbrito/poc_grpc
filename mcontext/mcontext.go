@@ -3,12 +3,12 @@ package mcontext
 import (
 	"context"
 
-	"github.com/poc_grpc/api"
+	"github.com/poc_grpc/models"
 )
 
 type Context interface {
 	context.Context
-	Username() api.Username
+	Username() models.Username
 }
 
 type myContext struct {
@@ -27,10 +27,10 @@ func WithValue(ctx Context, key interface{}, val interface{}) Context {
 	return NewFrom(context.WithValue(ctx, key, val))
 }
 
-func (ctx myContext) Username() api.Username {
-	logged, ok := ctx.Value(api.UsernameCtxKey).(api.Username)
-	if !ok && logged.String() == "" {
+func (ctx myContext) Username() models.Username {
+	user, ok := ctx.Value(models.UsernameCtxKey).(models.Username)
+	if !ok && user.String() == "" {
 		return ""
 	}
-	return api.Username(logged)
+	return models.Username(user)
 }

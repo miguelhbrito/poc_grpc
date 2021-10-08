@@ -7,10 +7,10 @@ import (
 
 	db "github.com/poc_grpc/db_connect"
 	"github.com/poc_grpc/migrations"
-	"github.com/poc_grpc/observalibity"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/poc_grpc/middleware"
+	"github.com/poc_grpc/observability"
 	proto "github.com/poc_grpc/pb"
 	"github.com/poc_grpc/service"
 	"github.com/rs/zerolog/log"
@@ -26,7 +26,7 @@ func main() {
 	migrations.InitMigrations(dbconnection)
 	defer dbconnection.Close()
 
-	closer := observalibity.InitJaeger("Server init tracing")
+	closer := observability.InitJaeger("Server init tracing")
 	defer closer.Close()
 
 	addr := fmt.Sprintf(":%d", 50051)
