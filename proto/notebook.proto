@@ -1,9 +1,11 @@
 syntax = "proto3";
 
-option go_package = "poc_grpc/proto";
+option go_package = "/proto";
 
 service NotebookService {
     rpc CreateNotebook(CreateNotebookRequest) returns (CreateNotebookResponse) {};
+    rpc GetNotebook(GetNotebookRequest) returns(GetNotebookResponse) {};
+    rpc ListNotebooks(ListNotebooksRequest) returns(stream ListNotebooksResponse) {};
 }
 
 message Notebook {
@@ -21,6 +23,20 @@ message CreateNotebookRequest {
     int64 numeroSerie = 4;
 }
 
+message GetNotebookRequest {
+    string id = 1;
+}
+
+message ListNotebooksRequest{}
+
 message CreateNotebookResponse {
+    Notebook notebook = 1;
+}
+
+message GetNotebookResponse {
+    Notebook notebook = 1;
+}
+
+message ListNotebooksResponse{
     Notebook notebook = 1;
 }

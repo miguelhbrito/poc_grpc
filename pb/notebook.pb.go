@@ -170,6 +170,91 @@ func (x *CreateNotebookRequest) GetNumeroSerie() int64 {
 	return 0
 }
 
+type GetNotebookRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *GetNotebookRequest) Reset() {
+	*x = GetNotebookRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_notebook_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetNotebookRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetNotebookRequest) ProtoMessage() {}
+
+func (x *GetNotebookRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_notebook_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetNotebookRequest.ProtoReflect.Descriptor instead.
+func (*GetNotebookRequest) Descriptor() ([]byte, []int) {
+	return file_notebook_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetNotebookRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type ListNotebooksRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ListNotebooksRequest) Reset() {
+	*x = ListNotebooksRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_notebook_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListNotebooksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListNotebooksRequest) ProtoMessage() {}
+
+func (x *ListNotebooksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_notebook_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListNotebooksRequest.ProtoReflect.Descriptor instead.
+func (*ListNotebooksRequest) Descriptor() ([]byte, []int) {
+	return file_notebook_proto_rawDescGZIP(), []int{3}
+}
+
 type CreateNotebookResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -181,7 +266,7 @@ type CreateNotebookResponse struct {
 func (x *CreateNotebookResponse) Reset() {
 	*x = CreateNotebookResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_notebook_proto_msgTypes[2]
+		mi := &file_notebook_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -194,7 +279,7 @@ func (x *CreateNotebookResponse) String() string {
 func (*CreateNotebookResponse) ProtoMessage() {}
 
 func (x *CreateNotebookResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_notebook_proto_msgTypes[2]
+	mi := &file_notebook_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -207,10 +292,104 @@ func (x *CreateNotebookResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateNotebookResponse.ProtoReflect.Descriptor instead.
 func (*CreateNotebookResponse) Descriptor() ([]byte, []int) {
-	return file_notebook_proto_rawDescGZIP(), []int{2}
+	return file_notebook_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *CreateNotebookResponse) GetNotebook() *Notebook {
+	if x != nil {
+		return x.Notebook
+	}
+	return nil
+}
+
+type GetNotebookResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Notebook *Notebook `protobuf:"bytes,1,opt,name=notebook,proto3" json:"notebook,omitempty"`
+}
+
+func (x *GetNotebookResponse) Reset() {
+	*x = GetNotebookResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_notebook_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetNotebookResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetNotebookResponse) ProtoMessage() {}
+
+func (x *GetNotebookResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_notebook_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetNotebookResponse.ProtoReflect.Descriptor instead.
+func (*GetNotebookResponse) Descriptor() ([]byte, []int) {
+	return file_notebook_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetNotebookResponse) GetNotebook() *Notebook {
+	if x != nil {
+		return x.Notebook
+	}
+	return nil
+}
+
+type ListNotebooksResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Notebook *Notebook `protobuf:"bytes,1,opt,name=notebook,proto3" json:"notebook,omitempty"`
+}
+
+func (x *ListNotebooksResponse) Reset() {
+	*x = ListNotebooksResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_notebook_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListNotebooksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListNotebooksResponse) ProtoMessage() {}
+
+func (x *ListNotebooksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_notebook_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListNotebooksResponse.ProtoReflect.Descriptor instead.
+func (*ListNotebooksResponse) Descriptor() ([]byte, []int) {
+	return file_notebook_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListNotebooksResponse) GetNotebook() *Notebook {
 	if x != nil {
 		return x.Notebook
 	}
@@ -236,18 +415,38 @@ var file_notebook_proto_rawDesc = []byte{
 	0x72, 0x63, 0x61, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x6f, 0x18, 0x03, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x06, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x6f, 0x12, 0x20, 0x0a, 0x0b, 0x6e,
 	0x75, 0x6d, 0x65, 0x72, 0x6f, 0x53, 0x65, 0x72, 0x69, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x0b, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x6f, 0x53, 0x65, 0x72, 0x69, 0x65, 0x22, 0x3f, 0x0a,
-	0x16, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62,
-	0x6f, 0x6f, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x4e, 0x6f, 0x74, 0x65,
-	0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x32, 0x56,
-	0x0a, 0x0f, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x12, 0x43, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62,
-	0x6f, 0x6f, 0x6b, 0x12, 0x16, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65,
-	0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x43, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x08, 0x5a, 0x06, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x0b, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x6f, 0x53, 0x65, 0x72, 0x69, 0x65, 0x22, 0x24, 0x0a,
+	0x12, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x02, 0x69, 0x64, 0x22, 0x16, 0x0a, 0x14, 0x4c, 0x69, 0x73, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62,
+	0x6f, 0x6f, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x3f, 0x0a, 0x16, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f,
+	0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f,
+	0x6f, 0x6b, 0x52, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x22, 0x3c, 0x0a, 0x13,
+	0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b,
+	0x52, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x22, 0x3e, 0x0a, 0x15, 0x4c, 0x69,
+	0x73, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b,
+	0x52, 0x08, 0x6e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x32, 0xd6, 0x01, 0x0a, 0x0f, 0x4e,
+	0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43,
+	0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b,
+	0x12, 0x16, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f,
+	0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x3a, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f,
+	0x6f, 0x6b, 0x12, 0x13, 0x2e, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x47, 0x65, 0x74, 0x4e, 0x6f, 0x74,
+	0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x42, 0x0a, 0x0d, 0x4c, 0x69, 0x73, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x73,
+	0x12, 0x15, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4e, 0x6f, 0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x4e, 0x6f,
+	0x74, 0x65, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x30, 0x01, 0x42, 0x08, 0x5a, 0x06, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -262,21 +461,31 @@ func file_notebook_proto_rawDescGZIP() []byte {
 	return file_notebook_proto_rawDescData
 }
 
-var file_notebook_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_notebook_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_notebook_proto_goTypes = []interface{}{
 	(*Notebook)(nil),               // 0: Notebook
 	(*CreateNotebookRequest)(nil),  // 1: CreateNotebookRequest
-	(*CreateNotebookResponse)(nil), // 2: CreateNotebookResponse
+	(*GetNotebookRequest)(nil),     // 2: GetNotebookRequest
+	(*ListNotebooksRequest)(nil),   // 3: ListNotebooksRequest
+	(*CreateNotebookResponse)(nil), // 4: CreateNotebookResponse
+	(*GetNotebookResponse)(nil),    // 5: GetNotebookResponse
+	(*ListNotebooksResponse)(nil),  // 6: ListNotebooksResponse
 }
 var file_notebook_proto_depIdxs = []int32{
 	0, // 0: CreateNotebookResponse.notebook:type_name -> Notebook
-	1, // 1: NotebookService.CreateNotebook:input_type -> CreateNotebookRequest
-	2, // 2: NotebookService.CreateNotebook:output_type -> CreateNotebookResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 1: GetNotebookResponse.notebook:type_name -> Notebook
+	0, // 2: ListNotebooksResponse.notebook:type_name -> Notebook
+	1, // 3: NotebookService.CreateNotebook:input_type -> CreateNotebookRequest
+	2, // 4: NotebookService.GetNotebook:input_type -> GetNotebookRequest
+	3, // 5: NotebookService.ListNotebooks:input_type -> ListNotebooksRequest
+	4, // 6: NotebookService.CreateNotebook:output_type -> CreateNotebookResponse
+	5, // 7: NotebookService.GetNotebook:output_type -> GetNotebookResponse
+	6, // 8: NotebookService.ListNotebooks:output_type -> ListNotebooksResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_notebook_proto_init() }
@@ -310,7 +519,55 @@ func file_notebook_proto_init() {
 			}
 		}
 		file_notebook_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetNotebookRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_notebook_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListNotebooksRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_notebook_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateNotebookResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_notebook_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetNotebookResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_notebook_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListNotebooksResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -328,7 +585,7 @@ func file_notebook_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_notebook_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"net"
+	"net/http"
 
 	db "github.com/poc_grpc/db_connect"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/poc_grpc/middleware"
 	proto "github.com/poc_grpc/pb"
@@ -21,6 +23,7 @@ func main() {
 	_ = db.InitDB()
 
 	addr := fmt.Sprintf(":%d", 50051)
+	addrHttp := fmt.Sprintf(":%d", 5000)
 
 	log.Info().Str("app", "Server gRPC").Msgf("Starting Grpc server addr %s", addr)
 
@@ -47,6 +50,9 @@ func main() {
 
 	proto.RegisterNotebookServiceServer(grpcServer, notebookService)
 
+	http.Handle("/metrics", promhttp.Handler())
+
+	log.Fatal().Err(http.ListenAndServe(addrHttp, nil)).Msg("failed to start http server")
 	log.Fatal().Err(grpcServer.Serve(lis)).Msg("failed to start grpc")
 
 }

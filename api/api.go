@@ -1,7 +1,7 @@
 package api
 
 const (
-	AuthorizationCtxKey Context = "x-authorization"
+	AuthorizationCtxKey Context = "authorization"
 	UsernameCtxKey      Context = "username"
 )
 
