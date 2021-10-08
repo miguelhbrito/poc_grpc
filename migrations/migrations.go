@@ -6,6 +6,9 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+
+	"fmt"
+	"os"
 )
 
 func InitMigrations(db *sql.DB) {
@@ -13,8 +16,12 @@ func InitMigrations(db *sql.DB) {
 	if err != nil {
 		panic(err)
 	}
+	pwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
 	m, err := migrate.NewWithDatabaseInstance(
-		"file:///home/miguelbrito/go/src/github.com/poc_grpc/migrations",
+		fmt.Sprintf("file://%s", pwd),
 		"postgres", driver)
 
 	m.Down()
