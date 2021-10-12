@@ -1,6 +1,6 @@
 # poc_grpc
 
-An API gRPC service example with observability features as custom logs, Jaeger and NATS(TODO).
+An API gRPC service example with observability features as custom logs, Jaeger and NATS(TODO). (TODO login with keycloak)
 
 ## 🧰 Configuration
 To install bloomRPC:
@@ -13,8 +13,7 @@ npm run package
 ```
 To start application:
 ``` powershell
-docker-compose up -d
-go run main.go
+make run-server-grpc
 ```
 
 ## 🛠 How to use

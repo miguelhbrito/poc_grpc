@@ -6,18 +6,18 @@ import (
 	"net/http"
 
 	db "github.com/poc_grpc/db_connect"
-	"github.com/poc_grpc/migrations"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
 	"github.com/poc_grpc/middleware"
+	"github.com/poc_grpc/migrations"
 	"github.com/poc_grpc/observability"
 	proto "github.com/poc_grpc/pb"
 	"github.com/poc_grpc/service"
+
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func main() {
