@@ -79,3 +79,42 @@ func (n NotebookService) ListNotebooks(req *proto.ListNotebooksRequest, stream p
 	}
 	return nil
 }
+
+func (n NotebookService) DeleteNotebook(ctx context.Context, req *proto.DeleteNotebookRequest) (*proto.DeleteNotebookResponse, error) {
+	mctx := mcontext.NewFrom(ctx)
+	mlog.Info(mctx).Msgf("Received request to delete a notebook by id {%s}", req.GetId())
+	err := storage.DeleteNotebook(mctx, req.Id)
+	if err != nil {
+		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to delete notebook, error: %v", err))
+	}
+	return &proto.DeleteNotebookResponse{}, nil
+}
+
+func (n NotebookService) UpdateNotebook(ctx context.Context, req *proto.UpdateNotebookRequest) (*proto.UpdateNotebookResponse, error) {
+	mctx := mcontext.NewFrom(ctx)
+	nbEntity := &entity.Notebook{
+		ID:          req.Notebook.Id,
+		Name:        req.Notebook.Name,
+		Marca:       req.Notebook.Marca,
+		Modelo:      req.Notebook.Modelo,
+		NumeroSerie: req.Notebook.NumeroSerie,
+	}
+	mlog.Info(mctx).Msgf("Received request to update a notebook by id {%s}")
+	err := storage.UpdateNotebook(mctx, *nbEntity)
+	if err != nil {
+		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to update notebook, error: %v", err))
+	}
+	nbResponse, err := storage.GetByIdNotebook(mctx, nbEntity.ID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to get notebook by id, error: %v", err))
+	}
+	return &proto.UpdateNotebookResponse{
+		Notebook: &proto.Notebook{
+			Id:          nbResponse.ID,
+			Name:        nbResponse.Name,
+			Marca:       nbResponse.Marca,
+			Modelo:      nbResponse.Modelo,
+			NumeroSerie: nbEntity.NumeroSerie,
+		},
+	}, nil
+}

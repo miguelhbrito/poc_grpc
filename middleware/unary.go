@@ -24,27 +24,26 @@ func Interceptor() grpc.UnaryServerInterceptor {
 			tags[k] = strings.Join(v, "")
 		}
 
-		mctx := observability.SpanByGprc(ctx, observability.MySpan{
-			FullMethod: info.FullMethod,
-			Infos:      tags,
+		mCtx := mcontext.NewFrom(ctx)
+		mctx := observability.SpanByGprc(mCtx, observability.MySpan{
+			ServiceName: info.FullMethod,
+			Infos:       tags,
 		})
 
-		username := tags[string(models.UsernameCtxKey)]
-		mctx = mcontext.WithValue(mctx, models.UsernameCtxKey, models.Username(username))
-
-		grpcBasicAuth, ok := tags[string(models.AuthorizationCtxKey)]
-		if grpcBasicAuth != "" && ok {
-			xAuthBytes, err := base64.StdEncoding.DecodeString(grpcBasicAuth)
+		authCheck, ok := tags[string(models.AuthorizationCtxKey)]
+		if authCheck != "" && ok {
+			authBytes, err := base64.StdEncoding.DecodeString(authCheck)
 			if err != nil {
 				return "", status.Error(codes.Internal, "Error to decode base64")
 			}
-			if string(xAuthBytes) != "user:password" {
+			if string(authBytes) != "gandalf:mithrandir" {
 				return "", status.Error(codes.PermissionDenied, "User not allowed")
 			}
-			return handler(mctx, req)
+			username := strings.Split(string(authBytes), ":")
+			mctx = mcontext.WithValue(mctx, models.UsernameCtxKey, models.Username(username[0]))
 		}
 
-		mlog.Info(mctx).Msgf("GrpcServerHandler tags: %v", tags)
+		mlog.Info(mctx).Msgf("Grpc-Server tags: %v", tags)
 		mlog.Info(mctx).Msgf(fmt.Sprintf("fullmethod : %s", info.FullMethod))
 
 		return handler(mctx, req)

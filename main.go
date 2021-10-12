@@ -26,7 +26,7 @@ func main() {
 	migrations.InitMigrations(dbconnection)
 	defer dbconnection.Close()
 
-	closer := observability.InitJaeger("Server init tracing")
+	closer := observability.InitJaeger("Server grpc tracking")
 	defer closer.Close()
 
 	addr := fmt.Sprintf(":%d", 50051)

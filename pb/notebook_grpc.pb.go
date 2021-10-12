@@ -21,6 +21,8 @@ type NotebookServiceClient interface {
 	CreateNotebook(ctx context.Context, in *CreateNotebookRequest, opts ...grpc.CallOption) (*CreateNotebookResponse, error)
 	GetNotebook(ctx context.Context, in *GetNotebookRequest, opts ...grpc.CallOption) (*GetNotebookResponse, error)
 	ListNotebooks(ctx context.Context, in *ListNotebooksRequest, opts ...grpc.CallOption) (NotebookService_ListNotebooksClient, error)
+	DeleteNotebook(ctx context.Context, in *DeleteNotebookRequest, opts ...grpc.CallOption) (*DeleteNotebookResponse, error)
+	UpdateNotebook(ctx context.Context, in *UpdateNotebookRequest, opts ...grpc.CallOption) (*UpdateNotebookResponse, error)
 }
 
 type notebookServiceClient struct {
@@ -81,6 +83,24 @@ func (x *notebookServiceListNotebooksClient) Recv() (*ListNotebooksResponse, err
 	return m, nil
 }
 
+func (c *notebookServiceClient) DeleteNotebook(ctx context.Context, in *DeleteNotebookRequest, opts ...grpc.CallOption) (*DeleteNotebookResponse, error) {
+	out := new(DeleteNotebookResponse)
+	err := c.cc.Invoke(ctx, "/NotebookService/DeleteNotebook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *notebookServiceClient) UpdateNotebook(ctx context.Context, in *UpdateNotebookRequest, opts ...grpc.CallOption) (*UpdateNotebookResponse, error) {
+	out := new(UpdateNotebookResponse)
+	err := c.cc.Invoke(ctx, "/NotebookService/UpdateNotebook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NotebookServiceServer is the server API for NotebookService service.
 // All implementations must embed UnimplementedNotebookServiceServer
 // for forward compatibility
@@ -88,6 +108,8 @@ type NotebookServiceServer interface {
 	CreateNotebook(context.Context, *CreateNotebookRequest) (*CreateNotebookResponse, error)
 	GetNotebook(context.Context, *GetNotebookRequest) (*GetNotebookResponse, error)
 	ListNotebooks(*ListNotebooksRequest, NotebookService_ListNotebooksServer) error
+	DeleteNotebook(context.Context, *DeleteNotebookRequest) (*DeleteNotebookResponse, error)
+	UpdateNotebook(context.Context, *UpdateNotebookRequest) (*UpdateNotebookResponse, error)
 	mustEmbedUnimplementedNotebookServiceServer()
 }
 
@@ -103,6 +125,12 @@ func (UnimplementedNotebookServiceServer) GetNotebook(context.Context, *GetNoteb
 }
 func (UnimplementedNotebookServiceServer) ListNotebooks(*ListNotebooksRequest, NotebookService_ListNotebooksServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListNotebooks not implemented")
+}
+func (UnimplementedNotebookServiceServer) DeleteNotebook(context.Context, *DeleteNotebookRequest) (*DeleteNotebookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteNotebook not implemented")
+}
+func (UnimplementedNotebookServiceServer) UpdateNotebook(context.Context, *UpdateNotebookRequest) (*UpdateNotebookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateNotebook not implemented")
 }
 func (UnimplementedNotebookServiceServer) mustEmbedUnimplementedNotebookServiceServer() {}
 
@@ -174,6 +202,42 @@ func (x *notebookServiceListNotebooksServer) Send(m *ListNotebooksResponse) erro
 	return x.ServerStream.SendMsg(m)
 }
 
+func _NotebookService_DeleteNotebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteNotebookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NotebookServiceServer).DeleteNotebook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/NotebookService/DeleteNotebook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotebookServiceServer).DeleteNotebook(ctx, req.(*DeleteNotebookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NotebookService_UpdateNotebook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateNotebookRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NotebookServiceServer).UpdateNotebook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/NotebookService/UpdateNotebook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NotebookServiceServer).UpdateNotebook(ctx, req.(*UpdateNotebookRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NotebookService_ServiceDesc is the grpc.ServiceDesc for NotebookService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -188,6 +252,14 @@ var NotebookService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNotebook",
 			Handler:    _NotebookService_GetNotebook_Handler,
+		},
+		{
+			MethodName: "DeleteNotebook",
+			Handler:    _NotebookService_DeleteNotebook_Handler,
+		},
+		{
+			MethodName: "UpdateNotebook",
+			Handler:    _NotebookService_UpdateNotebook_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

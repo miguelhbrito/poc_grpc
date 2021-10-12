@@ -18,7 +18,7 @@ func InitJaeger(service string) io.Closer {
 		ServiceName: service,
 		Sampler: &config.SamplerConfig{
 			//already in default
-			SamplingServerURL: "http://localhost:5778/sampling",
+			SamplingServerURL: "http://127.0.0.1:5778/sampling",
 			Type:              "const",
 			Param:             1.0,
 		},
