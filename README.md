@@ -1,6 +1,6 @@
 # poc_grpc
 
-An API gRPC service example, with observability feature as custom logs, Jaeger and NATS(TODO).
+An API gRPC service example, with observability features as custom logs, Jaeger and NATS(TODO).
 
 ## 🧰 Configuration
 To install bloomRPC:
