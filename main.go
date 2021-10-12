@@ -10,6 +10,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/poc_grpc/middleware"
+	"github.com/poc_grpc/observability"
 	proto "github.com/poc_grpc/pb"
 	"github.com/poc_grpc/service"
 	"github.com/rs/zerolog/log"
@@ -23,8 +24,10 @@ func main() {
 
 	dbconnection := db.InitDB()
 	migrations.InitMigrations(dbconnection)
-
 	defer dbconnection.Close()
+
+	closer := observability.InitJaeger("Server grpc tracking")
+	defer closer.Close()
 
 	addr := fmt.Sprintf(":%d", 50051)
 	addrHttp := fmt.Sprintf(":%d", 5000)

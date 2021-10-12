@@ -4,8 +4,10 @@ option go_package = "/proto";
 
 service NotebookService {
     rpc CreateNotebook(CreateNotebookRequest) returns (CreateNotebookResponse) {};
-    rpc GetNotebook(GetNotebookRequest)       returns(GetNotebookResponse) {};
-    rpc ListNotebooks(ListNotebooksRequest)   returns(stream ListNotebooksResponse) {};
+    rpc GetNotebook(GetNotebookRequest)       returns (GetNotebookResponse) {};
+    rpc ListNotebooks(ListNotebooksRequest)   returns (stream ListNotebooksResponse) {};
+    rpc DeleteNotebook(DeleteNotebookRequest) returns (DeleteNotebookResponse) {};
+    rpc UpdateNotebook(UpdateNotebookRequest) returns (UpdateNotebookResponse) {};
 }
 
 message Notebook {
@@ -29,6 +31,14 @@ message GetNotebookRequest {
 
 message ListNotebooksRequest{}
 
+message DeleteNotebookRequest {
+    string id = 1;
+}
+
+message UpdateNotebookRequest{
+    Notebook notebook = 1;
+}
+
 message CreateNotebookResponse {
     Notebook notebook = 1;
 }
@@ -38,5 +48,11 @@ message GetNotebookResponse {
 }
 
 message ListNotebooksResponse{
+    Notebook notebook = 1;
+}
+
+message DeleteNotebookResponse {}
+
+message UpdateNotebookResponse{
     Notebook notebook = 1;
 }
