@@ -42,6 +42,7 @@ func main() {
 	grpc_prometheus.EnableHandlingTimeHistogram()
 
 	notebookService := service.NotebookService{}
+	loginService := service.LoginService{}
 
 	sOpts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
@@ -56,6 +57,7 @@ func main() {
 	grpcServer := grpc.NewServer(sOpts...)
 
 	proto.RegisterNotebookServiceServer(grpcServer, notebookService)
+	proto.RegisterLoginServer(grpcServer, loginService)
 
 	http.Handle("/metrics", promhttp.Handler())
 

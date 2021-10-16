@@ -20,7 +20,7 @@ type NotebookService struct {
 func (n NotebookService) CreateNotebook(ctx context.Context, req *proto.CreateNotebookRequest) (*proto.CreateNotebookResponse, error) {
 	mctx := mcontext.NewFrom(ctx)
 	mlog.Info(mctx).Msg("Received request to create a notebook")
-	nbEntity := entity.GrpcToEntity(req)
+	nbEntity := entity.GrpcNbToEntity(req)
 	err := storage.SaveNotebook(mctx, nbEntity)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to save notebook, error: %v", err))

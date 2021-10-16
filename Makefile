@@ -1,3 +1,7 @@
 run-dennis-gateway:
-	chmod +x ./scripts/run-server-grpc.sh
-	./scripts/run-server-grpc.sh
+	echo "running the api server"
+	sudo docker-compose up -d
+	sudo ./scripts/run-server-grpc.sh
+
+config-down:
+	docker-compose down

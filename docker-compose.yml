@@ -22,6 +22,22 @@ services:
       - "16686:16686"
     networks:
       - local-network
+
+  keycloak:
+    image: jboss/keycloak
+    environment:
+      DB_VENDOR: H2
+      KEYCLOAK_IMPORT: /tmp/keycloak/valhalla.json
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./configs/keycloak:/tmp/keycloak
+    depends_on:
+      - postgres
+    networks:
+      - local-network
       
 networks:
   local-network:

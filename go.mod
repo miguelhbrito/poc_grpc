@@ -4,12 +4,13 @@ go 1.16
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
+	github.com/Nerzal/gocloak/v9 v9.0.3 // indirect
 	github.com/golang-migrate/migrate/v4 v4.15.0
 	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/lib/pq v1.10.3
-	github.com/opentracing/opentracing-go v1.1.0
+	github.com/opentracing/opentracing-go v1.2.0
 	github.com/prometheus/client_golang v1.11.0
 	github.com/rs/zerolog v1.25.0
 	github.com/uber/jaeger-client-go v2.29.1+incompatible

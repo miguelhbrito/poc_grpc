@@ -13,7 +13,7 @@ type Notebook struct {
 	NumeroSerie int64  `json:"numeroSerie"`
 }
 
-func GrpcToEntity(nb *proto.CreateNotebookRequest) Notebook {
+func GrpcNbToEntity(nb *proto.CreateNotebookRequest) Notebook {
 	return Notebook{
 		ID:          uuid.New().String(),
 		Name:        nb.Name,
