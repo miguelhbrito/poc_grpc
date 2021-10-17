@@ -11,6 +11,7 @@ const (
 	Realm        = "Valhalla"
 	ClientID     = "valhalla-login"
 	ClientSecret = "b0aab250-074a-4dae-b3cd-a43fe730c415"
+	ConfigURL    = "http://localhost:8080/auth/realms/Valhalla"
 )
 
 func Login(mctx mcontext.Context, loginReq entity.LoginReq) (entity.LoginResp, error) {

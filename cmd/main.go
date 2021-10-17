@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	db "github.com/poc_grpc/db_connect"
-	"github.com/poc_grpc/middleware"
+	middleware "github.com/poc_grpc/middleware/unary"
 	"github.com/poc_grpc/migrations"
 	"github.com/poc_grpc/observability"
 	proto "github.com/poc_grpc/pb"
@@ -47,6 +47,7 @@ func main() {
 	sOpts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_prometheus.UnaryServerInterceptor,
+			middleware.Authorization(),
 			middleware.Interceptor(),
 		)),
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
