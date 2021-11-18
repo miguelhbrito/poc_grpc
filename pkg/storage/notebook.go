@@ -4,13 +4,19 @@ import (
 	"database/sql"
 
 	dbconnect "github.com/poc_grpc/db_connect"
-	"github.com/poc_grpc/mcontext"
-	"github.com/poc_grpc/mlog"
-	"github.com/poc_grpc/models/entity"
-	"github.com/poc_grpc/observability"
+	"github.com/poc_grpc/pkg/api/entity"
+	"github.com/poc_grpc/pkg/mcontext"
+	"github.com/poc_grpc/pkg/mlog"
+	"github.com/poc_grpc/pkg/observability"
 )
 
-func SaveNotebook(mctx mcontext.Context, nb entity.Notebook) error {
+type NotebookPostgres struct{}
+
+func NewNotebookPostgres() Notebook {
+	return NotebookPostgres{}
+}
+
+func (n NotebookPostgres) SaveNotebook(mctx mcontext.Context, nb entity.Notebook) error {
 	db := dbconnect.InitDB()
 	defer db.Close()
 	sqlStatement := `INSERT INTO notebook VALUES ($1, $2, $3, $4, $5)`
@@ -29,7 +35,7 @@ func SaveNotebook(mctx mcontext.Context, nb entity.Notebook) error {
 	return nil
 }
 
-func GetByIdNotebook(mctx mcontext.Context, id string) (entity.Notebook, error) {
+func (n NotebookPostgres) GetByIdNotebook(mctx mcontext.Context, id string) (entity.Notebook, error) {
 	db := dbconnect.InitDB()
 	defer db.Close()
 	var nb entity.Notebook
@@ -54,7 +60,7 @@ func GetByIdNotebook(mctx mcontext.Context, id string) (entity.Notebook, error) 
 	return nb, nil
 }
 
-func ListNotebooks(mctx mcontext.Context) ([]entity.Notebook, error) {
+func (n NotebookPostgres) ListNotebooks(mctx mcontext.Context) ([]entity.Notebook, error) {
 	db := dbconnect.InitDB()
 	defer db.Close()
 	var nbs []entity.Notebook
@@ -82,7 +88,7 @@ func ListNotebooks(mctx mcontext.Context) ([]entity.Notebook, error) {
 	return nbs, nil
 }
 
-func DeleteNotebook(mctx mcontext.Context, id string) error {
+func (n NotebookPostgres) DeleteNotebook(mctx mcontext.Context, id string) error {
 	db := dbconnect.InitDB()
 	defer db.Close()
 	sqlStatement := `DELETE FROM notebook WHERE id=$1`
@@ -101,7 +107,7 @@ func DeleteNotebook(mctx mcontext.Context, id string) error {
 	return nil
 }
 
-func UpdateNotebook(mctx mcontext.Context, nb entity.Notebook) error {
+func (n NotebookPostgres) UpdateNotebook(mctx mcontext.Context, nb entity.Notebook) error {
 	db := dbconnect.InitDB()
 	defer db.Close()
 	sqlStatement := `UPDATE notebook SET name=$2, marca=$3, modelo=$4, numero_serie=$5 WHERE id=$1`

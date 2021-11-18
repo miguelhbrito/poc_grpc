@@ -5,9 +5,9 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
-	"github.com/poc_grpc/mcontext"
-	"github.com/poc_grpc/mlog"
-	"github.com/poc_grpc/models"
+	"github.com/poc_grpc/pkg/mcontext"
+	"github.com/poc_grpc/pkg/mlog"
+	"github.com/poc_grpc/pkg/api"
 	"github.com/uber/jaeger-client-go"
 )
 
@@ -30,7 +30,7 @@ func SpanByGprc(ctx context.Context, sp MySpan) mcontext.Context {
 
 	openCtx := opentracing.ContextWithSpan(ctx, serverSpan)
 	ctxResult := mcontext.NewFrom(openCtx)
-	ctxResult = mcontext.WithValue(ctxResult, models.TrackingIdCtxKey, models.TrackingId(getTrackingID(ctxResult)))
+	ctxResult = mcontext.WithValue(ctxResult, api.TrackingIdCtxKey, api.TrackingId(getTrackingID(ctxResult)))
 
 	for k, v := range sp.Infos {
 		serverSpan.SetTag(k, v)
@@ -57,7 +57,7 @@ func CreateSpan(ctx mcontext.Context, mySpan MySpan) mcontext.Context {
 	}
 
 	mctx := mcontext.NewFrom(openCtx)
-	mctx = mcontext.WithValue(mctx, models.TrackingIdCtxKey, trackingId)
+	mctx = mcontext.WithValue(mctx, api.TrackingIdCtxKey, trackingId)
 
 	for k, v := range mySpan.Infos {
 		span.SetTag(k, v)

@@ -1,4 +1,4 @@
-package models
+package api
 
 const (
 	AuthorizationCtxKey Context = "authorization"

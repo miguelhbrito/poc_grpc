@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/poc_grpc/mcontext"
-	"github.com/poc_grpc/mlog"
-	"github.com/poc_grpc/models"
-	"github.com/poc_grpc/observability"
+	"github.com/poc_grpc/pkg/mcontext"
+	"github.com/poc_grpc/pkg/mlog"
+	"github.com/poc_grpc/pkg/api"
+	"github.com/poc_grpc/pkg/observability"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -30,7 +30,7 @@ func Interceptor() grpc.UnaryServerInterceptor {
 			Infos:       tags,
 		})
 
-		authCheck, ok := tags[string(models.AuthorizationCtxKey)]
+		authCheck, ok := tags[string(api.AuthorizationCtxKey)]
 		if authCheck != "" && ok {
 			authBytes, err := base64.StdEncoding.DecodeString(authCheck)
 			if err != nil {
@@ -40,7 +40,7 @@ func Interceptor() grpc.UnaryServerInterceptor {
 				return "", status.Error(codes.PermissionDenied, "User not allowed")
 			}
 			username := strings.Split(string(authBytes), ":")
-			mctx = mcontext.WithValue(mctx, models.UsernameCtxKey, models.Username(username[0]))
+			mctx = mcontext.WithValue(mctx, api.UsernameCtxKey, api.Username(username[0]))
 		}
 
 		mlog.Info(mctx).Msgf("Grpc-Server tags: %v", tags)
