@@ -4,6 +4,7 @@ option go_package = "/proto";
 
 service Login {
     rpc CreateLogin(CreateLoginRequest) returns (CreateLoginResponse) {};
+    rpc LoginSystem(CreateLoginRequest) returns (CreateLoginSystemResponse){};
 }
 
 message CreateLoginRequest {
@@ -11,7 +12,9 @@ message CreateLoginRequest {
     string password = 2;
 }
 
-message CreateLoginResponse {
+message CreateLoginResponse {}
+
+message CreateLoginSystemResponse{
     string token = 1;
     int64 ttl = 2;
 }

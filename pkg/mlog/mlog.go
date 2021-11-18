@@ -4,7 +4,7 @@ import (
 	"context"
 	"os"
 
-	"github.com/poc_grpc/models"
+	"github.com/poc_grpc/pkg/api"
 	"github.com/rs/zerolog"
 )
 
@@ -31,12 +31,12 @@ func buildLog(ctx context.Context, level string) *zerolog.Event {
 
 		if li.username != "" {
 			logger = logger.With().
-				Str(string(models.UsernameCtxKey), li.username).Logger()
+				Str(string(api.UsernameCtxKey), li.username).Logger()
 		}
 
 		if li.trackingId != "" {
 			logger = logger.With().
-				Str(string(models.TrackingIdCtxKey), li.trackingId).Logger()
+				Str(string(api.TrackingIdCtxKey), li.trackingId).Logger()
 		}
 	}
 
@@ -59,11 +59,11 @@ func buildLog(ctx context.Context, level string) *zerolog.Event {
 func loadLogInfo(ctx context.Context) logInfo {
 	var li logInfo
 
-	if v := ctx.Value(models.UsernameCtxKey); v != nil {
-		li.username = v.(models.Username).String()
+	if v := ctx.Value(api.UsernameCtxKey); v != nil {
+		li.username = v.(api.Username).String()
 	}
-	if v := ctx.Value(models.TrackingIdCtxKey); v != nil {
-		li.trackingId = v.(models.TrackingId).String()
+	if v := ctx.Value(api.TrackingIdCtxKey); v != nil {
+		li.trackingId = v.(api.TrackingId).String()
 	}
 	return li
 }
