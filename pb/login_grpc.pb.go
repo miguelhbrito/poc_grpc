@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoginClient interface {
 	CreateLogin(ctx context.Context, in *CreateLoginRequest, opts ...grpc.CallOption) (*CreateLoginResponse, error)
+	LoginSystem(ctx context.Context, in *CreateLoginRequest, opts ...grpc.CallOption) (*CreateLoginSystemResponse, error)
 }
 
 type loginClient struct {
@@ -38,11 +39,21 @@ func (c *loginClient) CreateLogin(ctx context.Context, in *CreateLoginRequest, o
 	return out, nil
 }
 
+func (c *loginClient) LoginSystem(ctx context.Context, in *CreateLoginRequest, opts ...grpc.CallOption) (*CreateLoginSystemResponse, error) {
+	out := new(CreateLoginSystemResponse)
+	err := c.cc.Invoke(ctx, "/Login/LoginSystem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LoginServer is the server API for Login service.
 // All implementations must embed UnimplementedLoginServer
 // for forward compatibility
 type LoginServer interface {
 	CreateLogin(context.Context, *CreateLoginRequest) (*CreateLoginResponse, error)
+	LoginSystem(context.Context, *CreateLoginRequest) (*CreateLoginSystemResponse, error)
 	mustEmbedUnimplementedLoginServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedLoginServer struct {
 
 func (UnimplementedLoginServer) CreateLogin(context.Context, *CreateLoginRequest) (*CreateLoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateLogin not implemented")
+}
+func (UnimplementedLoginServer) LoginSystem(context.Context, *CreateLoginRequest) (*CreateLoginSystemResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginSystem not implemented")
 }
 func (UnimplementedLoginServer) mustEmbedUnimplementedLoginServer() {}
 
@@ -84,6 +98,24 @@ func _Login_CreateLogin_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Login_LoginSystem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LoginServer).LoginSystem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Login/LoginSystem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LoginServer).LoginSystem(ctx, req.(*CreateLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Login_ServiceDesc is the grpc.ServiceDesc for Login service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var Login_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateLogin",
 			Handler:    _Login_CreateLogin_Handler,
+		},
+		{
+			MethodName: "LoginSystem",
+			Handler:    _Login_LoginSystem_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
