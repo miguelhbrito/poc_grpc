@@ -11,13 +11,15 @@ import (
 var (
 	JwtKey                 = []byte("my_secret_key")
 	errUserOrPassIncorrect = errors.New("Username or Password is incorrect")
+	errPasswordHash        = errors.New("Error to generate password hash")
 )
 
 type Claims struct {
-	Cpf string `json:"username"`
+	Username string `json:"username"`
 	jwt.StandardClaims
 }
 
 type Login interface {
-	LoginIntoSystem(mctx mcontext.Context, l entity.Login) (entity.Login, error)
+	Create(mctx mcontext.Context, l entity.Login) error
+	Login(mctx mcontext.Context, l entity.Login) (entity.LoginToken, error)
 }

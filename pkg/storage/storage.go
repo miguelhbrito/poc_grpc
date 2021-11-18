@@ -12,3 +12,8 @@ type Notebook interface {
 	DeleteNotebook(mctx mcontext.Context, id string) error
 	UpdateNotebook(mctx mcontext.Context, nb entity.Notebook) error
 }
+
+type Login interface {
+	SaveLogin(mctx mcontext.Context, nb entity.Login) error
+	GetByIdLogin(mctx mcontext.Context, id string) (entity.Login, error)
+}

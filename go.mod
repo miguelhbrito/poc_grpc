@@ -15,6 +15,7 @@ require (
 	github.com/rs/zerolog v1.25.0
 	github.com/uber/jaeger-client-go v2.29.1+incompatible
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
+	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
 	google.golang.org/genproto v0.0.0-20211008145708-270636b82663 // indirect
 	google.golang.org/grpc v1.41.0
 	google.golang.org/protobuf v1.27.1

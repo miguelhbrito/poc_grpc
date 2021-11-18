@@ -14,14 +14,14 @@ import (
 
 type NotebookService struct {
 	proto.UnimplementedNotebookServiceServer
-	manager
+	Manager Notebook
 }
 
 func (n NotebookService) CreateNotebook(ctx context.Context, req *proto.CreateNotebookRequest) (*proto.CreateNotebookResponse, error) {
 	mctx := mcontext.NewFrom(ctx)
 	mlog.Info(mctx).Msg("Received request to create a notebook")
 	nbEntity := entity.Notebook{}.GenerateEntity(req)
-	nbResponse, err := n.manager.Create(mctx, nbEntity)
+	nbResponse, err := n.Manager.Create(mctx, nbEntity)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to save notebook, error: %v", err))
 	}
@@ -39,7 +39,7 @@ func (n NotebookService) CreateNotebook(ctx context.Context, req *proto.CreateNo
 func (n NotebookService) GetNotebook(ctx context.Context, req *proto.GetNotebookRequest) (*proto.GetNotebookResponse, error) {
 	mctx := mcontext.NewFrom(ctx)
 	mlog.Info(mctx).Msg("Received request to get a notebook by id")
-	nb, err := n.manager.GetById(mctx, req.Id)
+	nb, err := n.Manager.GetById(mctx, req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to get notebook, error: %v", err))
 	}
@@ -57,7 +57,7 @@ func (n NotebookService) GetNotebook(ctx context.Context, req *proto.GetNotebook
 func (n NotebookService) ListNotebooks(req *proto.ListNotebooksRequest, stream proto.NotebookService_ListNotebooksServer) error {
 	mctx := mcontext.NewFrom(stream.Context())
 	mlog.Info(mctx).Msg("Received request to list all notebooks stream")
-	nbs, err := n.manager.List(mctx)
+	nbs, err := n.Manager.List(mctx)
 	if err != nil {
 		return status.Error(codes.Internal, fmt.Sprintf("Fail to get notebook, error: %v", err))
 	}
@@ -83,7 +83,7 @@ func (n NotebookService) ListNotebooks(req *proto.ListNotebooksRequest, stream p
 func (n NotebookService) DeleteNotebook(ctx context.Context, req *proto.DeleteNotebookRequest) (*proto.DeleteNotebookResponse, error) {
 	mctx := mcontext.NewFrom(ctx)
 	mlog.Info(mctx).Msgf("Received request to delete a notebook by id {%s}", req.GetId())
-	err := n.manager.Delete(mctx, req.Id)
+	err := n.Manager.Delete(mctx, req.Id)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to delete notebook, error: %v", err))
 	}
@@ -100,11 +100,11 @@ func (n NotebookService) UpdateNotebook(ctx context.Context, req *proto.UpdateNo
 		NumeroSerie: req.Notebook.NumeroSerie,
 	}
 	mlog.Info(mctx).Msgf("Received request to update a notebook by id {%s}")
-	err := n.manager.Update(mctx, *nbEntity)
+	err := n.Manager.Update(mctx, *nbEntity)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to update notebook, error: %v", err))
 	}
-	nbResponse, err := n.manager.GetById(mctx, nbEntity.ID)
+	nbResponse, err := n.Manager.GetById(mctx, nbEntity.ID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Fail to get notebook by id, error: %v", err))
 	}

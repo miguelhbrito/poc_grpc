@@ -7,6 +7,11 @@ type Login struct {
 	Password string `json:"password"`
 }
 
+type LoginToken struct {
+	Token   string `json:"token"`
+	ExpTime int64  `json:"expTime"`
+}
+
 func (l Login) GenerateEntity(lr *proto.CreateLoginRequest) Login {
 	return Login{
 		Username: lr.Username,

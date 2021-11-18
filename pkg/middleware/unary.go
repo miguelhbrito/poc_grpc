@@ -2,13 +2,14 @@ package middleware
 
 import (
 	"context"
-	"encoding/base64"
 	"fmt"
 	"strings"
 
+	"github.com/golang-jwt/jwt"
+	"github.com/poc_grpc/pkg/api"
+	"github.com/poc_grpc/pkg/login"
 	"github.com/poc_grpc/pkg/mcontext"
 	"github.com/poc_grpc/pkg/mlog"
-	"github.com/poc_grpc/pkg/api"
 	"github.com/poc_grpc/pkg/observability"
 
 	"google.golang.org/grpc"
@@ -30,19 +31,35 @@ func Interceptor() grpc.UnaryServerInterceptor {
 			Infos:       tags,
 		})
 
-		authCheck, ok := tags[string(api.AuthorizationCtxKey)]
-		if authCheck != "" && ok {
-			authBytes, err := base64.StdEncoding.DecodeString(authCheck)
-			if err != nil {
-				return "", status.Error(codes.Internal, "Error to decode base64")
+		if info.FullMethod != "/Login/CreateLogin" && info.FullMethod != "/Login/LoginSystem" {
+			mlog.Debug(mctx).Msgf("Authorization middleware checking token auth")
+
+			tokenAuth, ok := tags[string(api.AuthorizationCtxKey)]
+			if !ok {
+				return "", status.Error(codes.FailedPrecondition, "Token was not passed into request")
 			}
-			if string(authBytes) != "gandalf:mithrandir" {
+			token, err := jwt.Parse(tokenAuth, func(token *jwt.Token) (interface{}, error) {
+				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+					return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+				}
+				return login.JwtKey, nil
+			})
+			if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				username := claims["username"]
+				usernameString := fmt.Sprintf("%s", username)
+				mctx = mcontext.WithValue(mctx, "props", claims)
+				mctx = mcontext.WithValue(mctx, api.UsernameCtxKey, api.Username(usernameString))
+				mctx = mcontext.WithValue(mctx, api.AuthorizationCtxKey, tokenAuth)
+				return handler(mctx, req)
+			} else {
+
+				mlog.Error(mctx).Msgf("Error on decode token, err: %v", err)
 				return "", status.Error(codes.PermissionDenied, "User not allowed")
 			}
-			username := strings.Split(string(authBytes), ":")
-			mctx = mcontext.WithValue(mctx, api.UsernameCtxKey, api.Username(username[0]))
+
 		}
 
+		mlog.Info(mctx).Msgf("Auth middleware")
 		mlog.Info(mctx).Msgf("Grpc-Server tags: %v", tags)
 		mlog.Info(mctx).Msgf(fmt.Sprintf("fullmethod : %s", info.FullMethod))
 
