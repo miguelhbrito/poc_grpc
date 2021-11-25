@@ -31,6 +31,12 @@ cd bloomrpc
 yarn install && ./node_modules/.bin/electron-rebuild
 npm run package
 ```
+
+To generate files from proto:
+``` powershell
+make generate-proto
+```
+
 Start database server postgresql:
 ``` powershell
 make config-up
