@@ -7,15 +7,10 @@ const (
 )
 
 type (
-	Context    string
-	Username   string
-	TrackingId string
+	Context  string
+	Username string
 )
 
 func (u Username) String() string {
 	return string(u)
-}
-
-func (t TrackingId) String() string {
-	return string(t)
 }

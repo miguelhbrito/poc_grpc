@@ -63,7 +63,7 @@ func loadLogInfo(ctx context.Context) logInfo {
 		li.username = v.(api.Username).String()
 	}
 	if v := ctx.Value(api.TrackingIdCtxKey); v != nil {
-		li.trackingId = v.(api.TrackingId).String()
+		li.trackingId = v.(string)
 	}
 	return li
 }

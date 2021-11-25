@@ -11,6 +11,18 @@ To install docker and docker-compose just follow the steps from website:
 - https://docs.docker.com/engine/install/
 - https://docs.docker.com/compose/install/
 
+Go plugins for the protocol compiler:
+
+- Install the protocol compiler plugins for Go using the following commands:
+``` powershell
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
+```
+- Update your PATH so that the protoc compiler can find the plugins:
+``` powershell
+export PATH="$PATH:$(go env GOPATH)/bin"
+``` 
+
 To install bloomRPC:
 ``` powershell
 git clone https://github.com/uw-labs/bloomrpc.git
