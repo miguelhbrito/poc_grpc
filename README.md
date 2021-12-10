@@ -22,6 +22,10 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 ``` powershell
 export PATH="$PATH:$(go env GOPATH)/bin"
 ``` 
+To generate files from proto:
+``` powershell
+make generate-proto
+```
 
 To install bloomRPC:
 ``` powershell
@@ -30,11 +34,6 @@ cd bloomrpc
 
 yarn install && ./node_modules/.bin/electron-rebuild
 npm run package
-```
-
-To generate files from proto:
-``` powershell
-make generate-proto
 ```
 
 Start database server postgresql:
